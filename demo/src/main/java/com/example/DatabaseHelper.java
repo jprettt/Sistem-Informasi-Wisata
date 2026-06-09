@@ -3,6 +3,7 @@ package com.example;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.security.MessageDigest;
 
 /**
  * DatabaseHelper - Kelas untuk mengelola koneksi database PostgreSQL
@@ -21,9 +22,28 @@ public class DatabaseHelper {
     // ============================================================
     // KONFIGURASI DATABASE
     // ============================================================
-    private static final String DB_URL = "jdbc:postgresql://localhost:5433/wisata_db";
+
+    public static String hashPasswordMD5(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(password.getBytes());
+
+            StringBuilder sb = new StringBuilder();
+
+            for (byte b : messageDigest) {
+                sb.append(String.format("%02x", b));
+            }
+
+            return sb.toString();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static final String DB_URL = "jdbc:postgresql://localhost:5432/wisata_db";
     private static final String DB_USER = "postgres";
-    private static final String DB_PASSWORD = "Saladass";
+    private static final String DB_PASSWORD = "vghky2155";
     private static final String DB_DRIVER = "org.postgresql.Driver";
 
     // ============================================================

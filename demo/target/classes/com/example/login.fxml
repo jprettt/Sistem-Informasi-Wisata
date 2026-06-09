@@ -98,7 +98,7 @@ TEMA VISUAL: Modern Dark Theme
                     <Label fx:id="statusLabel" style="-fx-font-size: 13; -fx-text-fill: #FF6B6B;" text="" wrapText="true" />
 
                     <!-- LOGIN BUTTON -->
-                    <Button fx:id="loginButton" minHeight="50.0" maxWidth="Double.MAX_VALUE" onAction="#handleLogin" 
+                    <Button fx:id="loginButton" minHeight="50.0" maxWidth="Infinity" onAction="#handleLogin" 
                             style="-fx-font-size: 15; -fx-font-weight: bold; -fx-background-color: #DEFF9A; -fx-text-fill: #121212; -fx-border-radius: 10; -fx-background-radius: 10;" 
                             text="M A S U K" />
                     

@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS itinerary_detail CASCADE;
 DROP TABLE IF EXISTS itinerary CASCADE;
 DROP TABLE IF EXISTS destinasi CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS wishlist CASCADE;
 
 -- ============================================================
 -- TABEL USERS - Menyimpan data pengguna aplikasi
@@ -97,6 +98,19 @@ CREATE TABLE itinerary_detail (
     FOREIGN KEY (itinerary_id) REFERENCES itinerary(id) ON DELETE CASCADE,
     FOREIGN KEY (destinasi_id) REFERENCES destinasi(id) ON DELETE CASCADE,
     UNIQUE(itinerary_id, urutan)
+);
+
+-- ============================================================
+-- TABEL WISHLIST - Menyimpan daftar favorit pengguna
+-- ============================================================
+CREATE TABLE wishlist (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    destinasi_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (destinasi_id) REFERENCES destinasi(id) ON DELETE CASCADE,
+    UNIQUE(user_id, destinasi_id)
 );
 
 -- ============================================================

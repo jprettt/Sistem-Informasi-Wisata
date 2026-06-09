@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.SplitPane?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.VBox?>
 
 <!--

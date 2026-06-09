@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane
+    prefHeight="900.0"
+    prefWidth="1400.0"
+    styleClass="root"
+    stylesheets="@style.css"
+    xmlns="http://javafx.com/javafx/19"
+    xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.example.TouristHomeController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="30.0" styleClass="header-bar"
+              style="-fx-padding: 12 30;">
+
+            <VBox alignment="CENTER_LEFT" spacing="2.0">
+                <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                       text="WISATA" />
+                <Label style="-fx-font-size: 9; -fx-text-fill: #DAFFDE; -fx-padding: 0 2;"
+                       text="Kelompok B6" />
+            </VBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <HBox alignment="CENTER" spacing="8.0">
+                <Button styleClass="nav-button, active" text="Home"
+                        fx:id="navHome" onAction="#handleNavHome" />
+                <Button styleClass="nav-button" text="Booking Saya"
+                        fx:id="navBooking" onAction="#handleNavBooking" />
+                <Button styleClass="nav-button" text="Wishlist"
+                        fx:id="navWishlist" onAction="#handleNavWishlist" />
+                <Button styleClass="nav-button" text="Itinerary"
+                        fx:id="navItinerary" onAction="#handleNavItinerary" />
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Button fx:id="profileButton"
+                    style="-fx-padding: 9 20; -fx-background-color: #DEFF9A;
+                           -fx-text-fill: #121212; -fx-border-radius: 15;
+                           -fx-background-radius: 15; -fx-font-weight: bold; -fx-font-size: 13;"
+                    text="Wisatawan" onAction="#handleLogin" />
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox spacing="0" style="-fx-background-color: #121212;">
+
+                <VBox alignment="CENTER" spacing="18.0" styleClass="hero-section">
+                    <Label
+                        style="-fx-font-size: 42; -fx-font-weight: bold;
+                               -fx-text-fill: #f5f5f5; -fx-alignment: center;"
+                        text="Temukan destinasi liburanmu"
+                        wrapText="true" />
+                    <Label
+                        style="-fx-font-size: 16; -fx-text-fill: #DAFFDE; -fx-alignment: center;"
+                        text="Jelajahi keindahan alam &amp; budaya Indonesia bersama kami"
+                        wrapText="true" />
+
+                    <HBox alignment="CENTER" spacing="10.0"
+                          style="-fx-padding: 20 0 0 0; -fx-max-width: 760;">
+                        <TextField
+                            fx:id="searchField"
+                            styleClass="search-field"
+                            promptText="Cari destinasi, kota, atau kategori..."
+                            prefWidth="580.0"
+                            HBox.hgrow="ALWAYS" />
+                        <Button
+                            fx:id="searchButton"
+                            style="-fx-padding: 13 30; -fx-font-size: 14; -fx-font-weight: bold;
+                                   -fx-border-radius: 25; -fx-background-radius: 25;"
+                            text="Cari" onAction="#handleSearch" />
+                    </HBox>
+
+                    <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10 0 0 0;">
+                        <Button styleClass="category-chip" text="Pantai" />
+                        <Button styleClass="category-chip" text="Pegunungan" />
+                        <Button styleClass="category-chip" text="Budaya" />
+                        <Button styleClass="category-chip" text="Alam" />
+                        <Button styleClass="category-chip" text="Hiburan" />
+                        <Button styleClass="category-chip" text="Kuliner" />
+                    </HBox>
+                </VBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="20.0" styleClass="filter-bar">
+                    <Label style="-fx-font-size: 13; -fx-font-weight: bold;
+                                  -fx-text-fill: #DEFF9A;"
+                           text="Filter:" />
+
+                    <VBox spacing="4.0">
+                        <Label styleClass="subtitle" text="Kategori Tempat" />
+                        <ComboBox fx:id="kategoriFilter" prefWidth="200.0"
+                                  promptText="Semua Kategori"
+                                  style="-fx-font-size: 13;" />
+                    </VBox>
+
+                    <VBox spacing="4.0">
+                        <Label styleClass="subtitle" text="Rating Minimal" />
+                        <ComboBox fx:id="ratingFilter" prefWidth="180.0"
+                                  promptText="Semua Rating"
+                                  style="-fx-font-size: 13;" />
+                    </VBox>
+
+                    <VBox spacing="4.0">
+                        <Label styleClass="subtitle" text="Rentang Harga" />
+                        <ComboBox fx:id="hargaFilter" prefWidth="200.0"
+                                  promptText="Semua Harga"
+                                  style="-fx-font-size: 13;" />
+                    </VBox>
+
+                    <Region HBox.hgrow="ALWAYS" />
+
+                    <Button styleClass="secondary"
+                            fx:id="resetFilterButton"
+                            style="-fx-padding: 10 22; -fx-font-size: 13;"
+                            text="Reset" onAction="#handleResetFilter" />
+                </HBox>
+
+                <VBox spacing="15.0" style="-fx-padding: 40 40 20 40;">
+                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                        <Label styleClass="header" text="Top Destination" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button styleClass="secondary"
+                                style="-fx-padding: 8 20; -fx-font-size: 12;"
+                                text="Lihat Semua →" onAction="#handleLihatSemua" />
+                    </HBox>
+                    <Label styleClass="subtitle"
+                           text="Destinasi paling populer dan direkomendasikan untuk kamu" />
+
+                    <FlowPane
+                        fx:id="destinationFlowPane"
+                        hgap="22.0"
+                        vgap="22.0"
+                        prefWrapLength="1300.0"
+                        style="-fx-padding: 10 0;">
+
+                        <VBox alignment="CENTER" spacing="12.0"
+                              style="-fx-padding: 40 0;">
+                            <Label styleClass="subtitle"
+                                   text="Memuat destinasi wisata..." />
+                        </VBox>
+
+                    </FlowPane>
+                </VBox>
+
+                <VBox spacing="15.0"
+                      style="-fx-padding: 20 40 40 40; -fx-background-color: #161616;">
+                    <Label styleClass="header" text="Jelajahi Kategori" />
+                    <Label styleClass="subtitle"
+                           text="Temukan tempat wisata sesuai selera perjalananmu" />
+
+                    <FlowPane fx:id="categoryFlowPane"
+                              hgap="14.0" vgap="14.0"
+                              prefWrapLength="1300.0"
+                              style="-fx-padding: 10 0;">
+                        <Button styleClass="category-chip" text="Pantai &amp; Laut" />
+                        <Button styleClass="category-chip" text="Pegunungan" />
+                        <Button styleClass="category-chip" text="Budaya &amp; Sejarah" />
+                        <Button styleClass="category-chip" text="Alam Terbuka" />
+                        <Button styleClass="category-chip" text="Taman Hiburan" />
+                        <Button styleClass="category-chip" text="Wisata Kuliner" />
+                        <Button styleClass="category-chip" text="Belanja" />
+                        <Button styleClass="category-chip" text="Olahraga Air" />
+                    </FlowPane>
+                </VBox>
+
+                <Region style="-fx-min-height: 50;" />
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <VBox spacing="10.0"
+              style="-fx-padding: 25 40; -fx-background-color: #111111;
+                     -fx-border-color: #222222; -fx-border-width: 1 0 0 0;">
+            <HBox alignment="CENTER_LEFT" spacing="60.0">
+                <VBox spacing="8.0">
+                    <Label style="-fx-font-size: 16; -fx-font-weight: bold;
+                                  -fx-text-fill: #DEFF9A;" text="WISATA" />
+                    <Label styleClass="subtitle" text="Sistem Informasi Wisata Indonesia" />
+                    <Label styleClass="subtitle" text="Kelompok B6" />
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                           text="Menu" />
+                    <Label styleClass="subtitle" text="Home" />
+                    <Label styleClass="subtitle" text="Booking Saya" />
+                    <Label styleClass="subtitle" text="Itinerary" />
+                </VBox>
+
+                <VBox spacing="8.0">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                           text="Kontak" />
+                    <Label styleClass="subtitle" text="b6@wisata.id" />
+                    <Label styleClass="subtitle" text="+62 812-3456-7890" />
+                    <Label styleClass="subtitle" text="www.wisata-b6.id" />
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <VBox alignment="CENTER_RIGHT" spacing="8.0">
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                           text="Follow Us" />
+                    <HBox spacing="8.0">
+                        <Button styleClass="secondary"
+                                style="-fx-padding: 7 14; -fx-font-size: 11;"
+                                text="Facebook" />
+                        <Button styleClass="secondary"
+                                style="-fx-padding: 7 14; -fx-font-size: 11;"
+                                text="Instagram" />
+                    </HBox>
+                </VBox>
+            </HBox>
+
+            <Separator />
+            <Label alignment="CENTER"
+                   style="-fx-text-fill: #555555; -fx-font-size: 11;"
+                   text="© 2024 Sistem Informasi Wisata — Kelompok B6. All Rights Reserved."
+                   wrapText="true" />
+        </VBox>
+    </bottom>
+
+</BorderPane>

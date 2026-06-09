@@ -128,7 +128,7 @@ public class ItineraryPlannerController implements Initializable {
 
         if (currentItineraryId <= 0) {
             Label empty = new Label("Belum ada destinasi dalam itinerary. Tambahkan dari Dashboard.");
-            empty.setStyle("-fx-text-fill: #888888; -fx-padding: 20;");
+            empty.setStyle("-fx-text-fill: #567C8D; -fx-padding: 20;");
             timelineVBox.getChildren().add(empty);
             return;
         }
@@ -160,7 +160,7 @@ public class ItineraryPlannerController implements Initializable {
                     }
                     if (!found) {
                         Label empty = new Label("Belum ada destinasi. Buka Dashboard → Tambah ke Itinerary.");
-                        empty.setStyle("-fx-text-fill: #888888; -fx-padding: 20;");
+                        empty.setStyle("-fx-text-fill: #567C8D; -fx-padding: 20;");
                         timelineVBox.getChildren().add(empty);
                     } else {
                         totalBiayaLabel.setText(DataService.formatRupiah(total));
@@ -181,7 +181,7 @@ public class ItineraryPlannerController implements Initializable {
         VBox timeCol = new VBox(0);
         timeCol.setPrefWidth(80);
         Label timeLabel = new Label(jam);
-        timeLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #DEFF9A; -fx-padding: 10;");
+        timeLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2F4156; -fx-padding: 10;");
         timeCol.getChildren().add(timeLabel);
 
         VBox card = new VBox(8);
@@ -189,7 +189,7 @@ public class ItineraryPlannerController implements Initializable {
         card.setStyle("-fx-padding: 16; -fx-background-color: #1a1a1a; -fx-border-radius: 12; -fx-background-radius: 12;");
 
         Label namaLabel = new Label(nama);
-        namaLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #f5f5f5;");
+        namaLabel.setStyle("-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #2F4156;");
         Label lokasiLabel = new Label("📍 " + lokasi);
         lokasiLabel.getStyleClass().add("subtitle");
         Label hargaLabel = new Label(DataService.formatRupiah(harga));

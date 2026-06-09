@@ -16,25 +16,42 @@ import javafx.scene.layout.VBox;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HomeController implements Initializable {
 
-    @FXML private Button navHome;
-    @FXML private Button navBooking;
-    @FXML private Button navWishlist;
-    @FXML private Button navItinerary;
-    @FXML private Button profileButton;
+    private static final Logger LOGGER = Logger.getLogger(HomeController.class.getName());
 
-    @FXML private TextField searchField;
-    @FXML private Button searchButton;
+    @FXML
+    private Button navHome;
+    @FXML
+    private Button navBooking;
+    @FXML
+    private Button navWishlist;
+    @FXML
+    private Button navItinerary;
+    @FXML
+    private Button profileButton;
 
-    @FXML private ComboBox<String> kategoriFilter;
-    @FXML private ComboBox<String> ratingFilter;
-    @FXML private ComboBox<String> hargaFilter;
-    @FXML private Button resetFilterButton;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
 
-    @FXML private FlowPane destinationFlowPane;
-    @FXML private FlowPane categoryFlowPane;
+    @FXML
+    private ComboBox<String> kategoriFilter;
+    @FXML
+    private ComboBox<String> ratingFilter;
+    @FXML
+    private ComboBox<String> hargaFilter;
+    @FXML
+    private Button resetFilterButton;
+
+    @FXML
+    private FlowPane destinationFlowPane;
+    @FXML
+    private FlowPane categoryFlowPane;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -84,7 +101,7 @@ public class HomeController implements Initializable {
 
         if (destinasiList.isEmpty()) {
             Label empty = new Label("Tidak ada destinasi yang cocok dengan filter.");
-            empty.setStyle("-fx-text-fill: #888888; -fx-font-size: 14; -fx-padding: 40;");
+            empty.setStyle("-fx-text-fill: #567C8D; -fx-font-size: 14; -fx-padding: 40;");
             destinationFlowPane.getChildren().add(empty);
             return;
         }
@@ -103,14 +120,14 @@ public class HomeController implements Initializable {
         imgPlaceholder.setMinHeight(160);
         imgPlaceholder.setStyle("-fx-background-color: #252525; -fx-alignment: center;");
         Label imgIcon = new Label(d.getKategori() != null ? d.getKategori().toUpperCase() : "WISATA");
-        imgIcon.setStyle("-fx-font-size: 14; -fx-text-fill: #DEFF9A; -fx-font-weight: bold; -fx-padding: 50 0;");
+        imgIcon.setStyle("-fx-font-size: 14; -fx-text-fill: #2F4156; -fx-font-weight: bold; -fx-padding: 50 0;");
         imgPlaceholder.getChildren().add(imgIcon);
 
         VBox info = new VBox(8);
         info.setStyle("-fx-padding: 14 15 16 15;");
 
         Label namaLabel = new Label(d.getNama());
-        namaLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #f5f5f5;");
+        namaLabel.setStyle("-fx-font-size: 15; -fx-font-weight: bold; -fx-text-fill: #2F4156;");
         namaLabel.setWrapText(true);
 
         Label lokasiLabel = new Label("📍 " + (d.getLokasi() != null ? d.getLokasi() : "-"));
@@ -131,9 +148,35 @@ public class HomeController implements Initializable {
         detailBtn.setMaxWidth(Double.MAX_VALUE);
         detailBtn.setOnAction(e -> handleLihatDetail(d));
 
-        info.getChildren().addAll(namaLabel, lokasiLabel, ratingRow, detailBtn);
+        Button bookingBtn = new Button("Booking");
+        bookingBtn.setStyle("-fx-padding: 7 12; -fx-font-size: 12; -fx-border-radius: 8; -fx-background-radius: 8;");
+        bookingBtn.setOnAction(e -> handleBooking(d));
+
+        info.getChildren().addAll(namaLabel, lokasiLabel, ratingRow, detailBtn, bookingBtn);
         card.getChildren().addAll(imgPlaceholder, info);
         return card;
+    }
+
+    private void handleBooking(Destinasi destinasi) {
+        User user = LoginController.getCurrentUser();
+        if (user == null) {
+            showInfo("Login Diperlukan", "Silakan login terlebih dahulu untuk melakukan booking.");
+            try {
+                App.setRoot("login");
+            } catch (Exception e) {
+                showError("Error", "Gagal membuka halaman login: " + e.getMessage());
+            }
+            return;
+        }
+
+        BookingController.setDestinasiId(destinasi.getId());
+        BookingController.setDestinasiNama(destinasi.getNama());
+        BookingController.setBaseHarga(destinasi.getHarga());
+        try {
+            App.setRoot("booking");
+        } catch (Exception e) {
+            showError("Error", "Gagal membuka halaman booking: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -181,11 +224,11 @@ public class HomeController implements Initializable {
             return;
         }
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Booking Saya");
-        alert.setHeaderText("Pesanan " + user.getNamaLengkap());
-        alert.setContentText(DataService.getPesananSummaryForUser(user.getId()));
-        alert.showAndWait();
+        try {
+            App.setRoot("bookings");
+        } catch (Exception e) {
+            showError("Error", "Gagal membuka halaman Booking: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -214,6 +257,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleLogin() {
+        System.out.println("HOME: login button clicked");
         User user = LoginController.getCurrentUser();
         if (user != null) {
             try {
@@ -222,13 +266,15 @@ public class HomeController implements Initializable {
                     c.loadDestinations();
                 });
             } catch (Exception e) {
-                showError("Error", "Gagal membuka dashboard.");
+                LOGGER.log(Level.SEVERE, "Gagal membuka dashboard", e);
+                showError("Error", "Gagal membuka dashboard: " + e.getMessage());
             }
         } else {
             try {
                 App.setRoot("login");
             } catch (Exception e) {
-                showError("Error", "Gagal membuka halaman login.");
+                LOGGER.log(Level.SEVERE, "Gagal membuka halaman login", e);
+                showError("Error", "Gagal membuka halaman login: " + e.getMessage());
             }
         }
     }
@@ -244,7 +290,22 @@ public class HomeController implements Initializable {
 
     @FXML
     private void handleNavWishlist() {
-        showInfo("Wishlist", "Fitur wishlist akan segera hadir. Simpan destinasi favorit Anda di sini.");
+        User user = LoginController.getCurrentUser();
+        if (user == null) {
+            showInfo("Login Diperlukan", "Silakan login terlebih dahulu untuk melihat wishlist Anda.");
+            try {
+                App.setRoot("login");
+            } catch (Exception e) {
+                showError("Error", "Gagal membuka halaman login.");
+            }
+            return;
+        }
+
+        try {
+            App.setRoot("wishlist");
+        } catch (Exception e) {
+            showError("Error", "Gagal membuka halaman wishlist: " + e.getMessage());
+        }
     }
 
     private void showError(String title, String message) {

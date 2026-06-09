@@ -139,19 +139,24 @@ public class LoginController {
             setCurrentUser(authenticatedUser);
             showInfo("Berhasil",
                     "Selamat datang " + authenticatedUser.getNamaLengkap() + "!");
-
-            // Pindah ke halaman dashboard
+            // Jika role Wisatawan: kembali ke tampilan awal (home)
             try {
-                openDashboard(authenticatedUser);
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "Error membuka dashboard", e);
-                showError("Error", "Gagal membuka halaman dashboard");
+                if (authenticatedUser.getRole() != null && authenticatedUser.getRole().equalsIgnoreCase("Wisatawan")) {
+                    App.setRoot("home");
+                } else {
+                    // Pindah ke halaman dashboard untuk role lain
+                    openDashboard(authenticatedUser);
+                }
+            } catch (Exception e) {
+                LOGGER.log(Level.SEVERE, "Error membuka halaman setelah login", e);
+                showError("Error", "Gagal membuka halaman setelah login: " + e.getMessage());
             }
         } else {
             // Login gagal
             LOGGER.log(Level.WARNING, "Percobaan login gagal untuk user: " + username);
             statusLabel.setText("❌ Login gagal - username atau password salah");
             statusLabel.setStyle("-fx-text-fill: #FF6B6B;");
+            showError("Login Gagal", "Username atau password salah.");
         }
     }
 
@@ -191,13 +196,13 @@ public class LoginController {
             }
 
             // ========== QUERY DATABASE ==========
-            // SQL query untuk mencari user berdasarkan username dan role
+            // SQL query untuk mencari user berdasarkan username saja.
+            // Role dari database akan dipakai sebagai data sesi setelah password cocok.
             String sql = "SELECT id, username, password, role, nama_lengkap, email, no_telepon " +
-                    "FROM users WHERE username = ? AND role = ?";
+                    "FROM users WHERE username = ?";
 
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, role);
 
             // ERROR HANDLING: Execute query
             rs = pstmt.executeQuery();
@@ -207,8 +212,9 @@ public class LoginController {
                 // User ditemukan, validasi password
                 String storedPassword = rs.getString("password");
 
-                // Bandingkan password secara langsung (plain text)
-                if (password.equals(storedPassword)) {
+                // Bandingkan password: dukung hashed (MD5) dan legacy plain-text
+                String hashedInput = DatabaseHelper.hashPasswordMD5(password);
+                if (hashedInput.equals(storedPassword) || password.equals(storedPassword)) {
                     // PASSWORD COCOK - LOGIN BERHASIL
                     User user = new User(
                             rs.getInt("id"),
@@ -324,6 +330,19 @@ public class LoginController {
     private void handleExit() {
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.close();
+    }
+
+    /**
+     * Buka halaman sign up.
+     */
+    @FXML
+    private void handleSignUp() {
+        try {
+            App.setRoot("signup");
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Gagal membuka halaman sign up", e);
+            showError("Error", "Gagal membuka halaman sign up: " + e.getMessage());
+        }
     }
 
     // ============================================================
