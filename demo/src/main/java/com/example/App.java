@@ -22,10 +22,10 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        LOGGER.log(Level.INFO, "Starting Sistem Eksplorasi Wisata Application");
+        LOGGER.log(Level.INFO, "Starting ExploreNusa Application");
 
         System.out.println("═══════════════════════════════════════════");
-        System.out.println("  SISTEM EKSPLORASI WISATA");
+        System.out.println("  EXPLORENUSA");
         System.out.println("═══════════════════════════════════════════");
         System.out.println("Checking database connection...");
 
@@ -43,7 +43,7 @@ public class App extends Application {
         cssUrl = getClass().getResource("style.css").toExternalForm();
         scene.getStylesheets().add(cssUrl);
 
-        stage.setTitle("Sistem Informasi Wisata - Kelompok B6");
+        stage.setTitle("ExploreNusa - Kelompok B6");
         stage.setScene(scene);
         stage.setWidth(1400);
         stage.setHeight(900);
@@ -84,7 +84,7 @@ public class App extends Application {
 
     public static void main(String[] args) {
         System.out.println("═══════════════════════════════════════════");
-        System.out.println("Launching Sistem Eksplorasi Wisata...");
+        System.out.println("Launching ExploreNusa...");
         System.out.println("═══════════════════════════════════════════");
         launch();
     }

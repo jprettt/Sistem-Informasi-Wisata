@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.WishlistController"
+            styleClass="main-container"
+            stylesheets="@style.css">
+
+    <top>
+        <VBox styleClass="action-footer" style="-fx-padding: 20 40; -fx-border-width: 0 0 1 0;">
+            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                <Button styleClass="secondary" text="← Kembali" onAction="#handleBack" />
+                <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2F4156;" text="Wishlist Saya" />
+            </HBox>
+            <Label fx:id="subtitleLabel" style="-fx-font-size: 12; -fx-text-fill: #567C8D; -fx-padding: 4 0 0 0;" text="Destinasi favorit Anda" />
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <FlowPane fx:id="wishlistFlow" hgap="20" vgap="20" style="-fx-padding: 24 40;" />
+        </ScrollPane>
+    </center>
+
+</BorderPane>

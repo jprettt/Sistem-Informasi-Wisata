@@ -30,9 +30,9 @@
               style="-fx-padding: 12 30;">
 
             <VBox alignment="CENTER_LEFT" spacing="2.0">
-                <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
-                       text="WISATA" />
-                <Label style="-fx-font-size: 9; -fx-text-fill: #DAFFDE; -fx-padding: 0 2;"
+                <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: #2F4156;"
+                       text="EXPLORENUSA" />
+                <Label style="-fx-font-size: 9; -fx-text-fill: #567C8D; -fx-padding: 0 2;"
                        text="Kelompok B6" />
             </VBox>
 
@@ -52,8 +52,8 @@
             <Region HBox.hgrow="ALWAYS" />
 
             <Button fx:id="profileButton"
-                    style="-fx-padding: 9 20; -fx-background-color: #DEFF9A;
-                           -fx-text-fill: #121212; -fx-border-radius: 15;
+                    style="-fx-padding: 9 20; -fx-background-color: #2F4156;
+                           -fx-text-fill: #FFFFFF; -fx-border-radius: 15;
                            -fx-background-radius: 15; -fx-font-weight: bold; -fx-font-size: 13;"
                     text="Wisatawan" onAction="#handleLogin" />
         </HBox>
@@ -188,18 +188,18 @@
 
     <bottom>
         <VBox spacing="10.0"
-              style="-fx-padding: 25 40; -fx-background-color: #111111;
-                     -fx-border-color: #222222; -fx-border-width: 1 0 0 0;">
+              style="-fx-padding: 25 40; -fx-background-color: #F5EFEB;
+                     -fx-border-color: #C8D9E6; -fx-border-width: 1 0 0 0;">
             <HBox alignment="CENTER_LEFT" spacing="60.0">
                 <VBox spacing="8.0">
                     <Label style="-fx-font-size: 16; -fx-font-weight: bold;
-                                  -fx-text-fill: #DEFF9A;" text="WISATA" />
-                    <Label styleClass="subtitle" text="Sistem Informasi Wisata Indonesia" />
+                                  -fx-text-fill: #2F4156;" text="EXPLORENUSA" />
+                    <Label styleClass="subtitle" text="ExploreNusa Indonesia" />
                     <Label styleClass="subtitle" text="Kelompok B6" />
                 </VBox>
 
                 <VBox spacing="8.0">
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #2F4156;"
                            text="Menu" />
                     <Label styleClass="subtitle" text="Home" />
                     <Label styleClass="subtitle" text="Booking Saya" />
@@ -207,17 +207,17 @@
                 </VBox>
 
                 <VBox spacing="8.0">
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #2F4156;"
                            text="Kontak" />
-                    <Label styleClass="subtitle" text="b6@wisata.id" />
+                    <Label styleClass="subtitle" text="support@explorenusa.id" />
                     <Label styleClass="subtitle" text="+62 812-3456-7890" />
-                    <Label styleClass="subtitle" text="www.wisata-b6.id" />
+                    <Label styleClass="subtitle" text="www.explorenusa.id" />
                 </VBox>
 
                 <Region HBox.hgrow="ALWAYS" />
 
                 <VBox alignment="CENTER_RIGHT" spacing="8.0">
-                    <Label style="-fx-font-weight: bold; -fx-text-fill: #DEFF9A;"
+                    <Label style="-fx-font-weight: bold; -fx-text-fill: #2F4156;"
                            text="Follow Us" />
                     <HBox spacing="8.0">
                         <Button styleClass="secondary"
@@ -232,8 +232,8 @@
 
             <Separator />
             <Label alignment="CENTER"
-                   style="-fx-text-fill: #555555; -fx-font-size: 11;"
-                   text="© 2024 Sistem Informasi Wisata — Kelompok B6. All Rights Reserved."
+                   style="-fx-text-fill: #567C8D; -fx-font-size: 11;"
+                   text="© 2026 ExploreNusa — Kelompok B6. All Rights Reserved."
                    wrapText="true" />
         </VBox>
     </bottom>

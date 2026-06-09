@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.BookingsController"
+            styleClass="main-container"
+            stylesheets="@style.css">
+
+    <top>
+        <VBox spacing="6.0" styleClass="action-footer" style="-fx-border-width: 0 0 1 0; -fx-padding: 20 40;">
+            <HBox spacing="12.0" alignment="CENTER_LEFT">
+                <Button styleClass="secondary" text="← Kembali" onAction="#handleBack" />
+                <VBox spacing="2.0">
+                    <Label styleClass="header" style="-fx-font-size: 20;" text="Booking Saya" />
+                    <Label fx:id="subtitleLabel" styleClass="subtitle" text="Daftar pesanan tiket Anda" />
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="scroll-pane">
+            <VBox style="-fx-padding: 28 40 40 40;" spacing="18.0" maxWidth="1120.0">
+                <Label styleClass="subtitle" text="Lihat, buka detail, atau batalkan pesanan yang masih aktif." />
+                <FlowPane fx:id="bookingsFlow" hgap="20" vgap="20" prefWrapLength="1120.0" />
+            </VBox>
+        </ScrollPane>
+    </center>
+
+</BorderPane>

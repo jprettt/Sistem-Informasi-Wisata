@@ -3,12 +3,14 @@ com\example\LoginController.class
 com\example\ItineraryPlannerController.class
 module-info.class
 com\example\App.class
+com\example\BookingsController.class
 com\example\SignupController.class
 com\example\DatabaseHelper.class
 com\example\ItineraryDetail.class
 com\example\HomeController.class
 com\example\PrimaryController.class
 com\example\User.class
+com\example\WishlistController.class
 com\example\BookingController.class
 com\example\Destinasi.class
 com\example\DetailDestinasiController.class
@@ -17,4 +19,5 @@ com\example\TestFXML.class
 com\example\SecondaryController.class
 com\example\ItineraryController.class
 com\example\DataService.class
+com\example\Pesanan.class
 com\example\Itinerary.class

@@ -144,6 +144,30 @@ public class DatabaseHelper {
      * Membuat tabel yang dibutuhkan aplikasi jika belum ada.
      */
     private void ensureRequiredTables(Connection conn) {
+        // 1. TENTUKAN KOLOM STATUS PADA TABEL USERS
+        try {
+            String checkSql = "SELECT column_name FROM information_schema.columns WHERE table_name='users' AND column_name='status'";
+            try (PreparedStatement pstmt = conn.prepareStatement(checkSql); ResultSet rs = pstmt.executeQuery()) {
+                if (!rs.next()) {
+                    String alterSql = "ALTER TABLE users ADD COLUMN status VARCHAR(20) DEFAULT 'Active'";
+                    try (PreparedStatement alterStmt = conn.prepareStatement(alterSql)) {
+                        alterStmt.execute();
+                        LOGGER.log(Level.INFO, "Kolom status berhasil ditambahkan ke tabel users");
+                    }
+                    // Tambahkan contoh user pengelola baru yang statusnya pending untuk verifikasi admin
+                    String insertPending = "INSERT INTO users (username, password, role, nama_lengkap, email, no_telepon, status) " +
+                            "VALUES ('pengelola_baru', 'admin', 'Pengelola', 'Vendor Kopi Kitab', 'vendor_kopi@mail.com', '08987654321', 'Pending') " +
+                            "ON CONFLICT DO NOTHING";
+                    try (PreparedStatement insertStmt = conn.prepareStatement(insertPending)) {
+                        insertStmt.execute();
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "Gagal memverifikasi kolom status pada tabel users: " + e.getMessage());
+        }
+
+        // 2. TABEL PESANAN
         String sql = "CREATE TABLE IF NOT EXISTS pesanan (" +
                 "id SERIAL PRIMARY KEY, " +
                 "user_id INT REFERENCES users(id) ON DELETE SET NULL, " +
@@ -166,6 +190,69 @@ public class DatabaseHelper {
             LOGGER.log(Level.INFO, "Tabel pesanan siap digunakan");
         } catch (SQLException e) {
             LOGGER.log(Level.WARNING, "Gagal membuat tabel pesanan: " + e.getMessage());
+        }
+
+        // 3. TABEL ULASAN
+        String sqlUlasan = "CREATE TABLE IF NOT EXISTS ulasan (" +
+                "id SERIAL PRIMARY KEY, " +
+                "user_id INT REFERENCES users(id) ON DELETE CASCADE, " +
+                "destinasi_id INT REFERENCES destinasi(id) ON DELETE CASCADE, " +
+                "rating INT CHECK (rating >= 1 AND rating <= 5), " +
+                "komentar TEXT, " +
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ")";
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlUlasan)) {
+            pstmt.execute();
+            LOGGER.log(Level.INFO, "Tabel ulasan siap digunakan");
+
+            // Insert sample ulasan jika kosong
+            String checkEmpty = "SELECT COUNT(*) FROM ulasan";
+            try (PreparedStatement ps = conn.prepareStatement(checkEmpty); ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    String insertSampleUlasan = "INSERT INTO ulasan (user_id, destinasi_id, rating, komentar) VALUES " +
+                            "(3, 1, 5, 'Luar biasa sekali Candi Borobudur ini, sangat megah dan rapi!'), " +
+                            "(4, 2, 4, 'Pantainya sangat indah, sayang sedikit ramai pengunjung.'), " +
+                            "(3, 3, 5, 'Pemandangan Bromo pagi hari sangat menakjubkan! Sangat disarankan.'), " +
+                            "(4, 1, 2, 'Spam ulasan! Klik link ini untuk mendapatkan hadiah gratis www.spamlink.com');"; // ulasan spam untuk dicoba dihapus oleh admin
+                    try (PreparedStatement psInsert = conn.prepareStatement(insertSampleUlasan)) {
+                        psInsert.execute();
+                        LOGGER.log(Level.INFO, "Sample ulasan berhasil di-insert");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "Gagal membuat tabel ulasan: " + e.getMessage());
+        }
+
+        // 4. TABEL AUDIT LOG
+        String sqlAuditLog = "CREATE TABLE IF NOT EXISTS audit_log (" +
+                "id SERIAL PRIMARY KEY, " +
+                "user_id INT REFERENCES users(id) ON DELETE SET NULL, " +
+                "username VARCHAR(50), " +
+                "aksi VARCHAR(255) NOT NULL, " +
+                "details TEXT, " +
+                "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+                ")";
+        try (PreparedStatement pstmt = conn.prepareStatement(sqlAuditLog)) {
+            pstmt.execute();
+            LOGGER.log(Level.INFO, "Tabel audit_log siap digunakan");
+
+            // Insert sample log jika kosong
+            String checkEmpty = "SELECT COUNT(*) FROM audit_log";
+            try (PreparedStatement ps = conn.prepareStatement(checkEmpty); ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getInt(1) == 0) {
+                    String insertSampleLog = "INSERT INTO audit_log (username, aksi, details) VALUES " +
+                            "('admin', 'LOGIN', 'Admin masuk ke dashboard utama'), " +
+                            "('pengelola01', 'UPDATE_PRICE', 'Mengubah harga tiket Candi Borobudur menjadi Rp 750.000'), " +
+                            "('wisatawan01', 'CREATE_BOOKING', 'Melakukan pemesanan tiket Raja Ampat dengan ID Pesanan #12');";
+                    try (PreparedStatement psInsert = conn.prepareStatement(insertSampleLog)) {
+                        psInsert.execute();
+                        LOGGER.log(Level.INFO, "Sample audit log berhasil di-insert");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.WARNING, "Gagal membuat tabel audit_log: " + e.getMessage());
         }
     }
 

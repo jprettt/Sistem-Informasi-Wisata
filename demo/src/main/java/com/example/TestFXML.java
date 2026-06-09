@@ -26,6 +26,35 @@ public class TestFXML {
                 System.out.println("Error dashboard.fxml: ");
                 e.printStackTrace();
             }
+            try {
+                System.out.println("Testing bookings.fxml...");
+                FXMLLoader loader = new FXMLLoader(TestFXML.class.getResource("bookings.fxml"));
+                Parent root = loader.load();
+                System.out.println("Success bookings.fxml!");
+            } catch (Exception e) {
+                System.out.println("Error bookings.fxml: ");
+                e.printStackTrace();
+            }
+
+            try {
+                System.out.println("Testing wishlist.fxml...");
+                FXMLLoader loader = new FXMLLoader(TestFXML.class.getResource("wishlist.fxml"));
+                Parent root = loader.load();
+                System.out.println("Success wishlist.fxml!");
+            } catch (Exception e) {
+                System.out.println("Error wishlist.fxml: ");
+                e.printStackTrace();
+            }
+
+            try {
+                System.out.println("Testing signup.fxml...");
+                FXMLLoader loader = new FXMLLoader(TestFXML.class.getResource("signup.fxml"));
+                Parent root = loader.load();
+                System.out.println("Success signup.fxml!");
+            } catch (Exception e) {
+                System.out.println("Error signup.fxml: ");
+                e.printStackTrace();
+            }
             
             Platform.exit();
         });

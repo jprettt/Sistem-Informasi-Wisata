@@ -20,7 +20,7 @@ FILE      : login.fxml
 Controller: com.example.LoginController
 Kelompok  : B6
 
-TEMA VISUAL: Modern Dark Theme
+TEMA VISUAL: Sky Blue & Navy Clean Theme
 =================================================================
 -->
 
@@ -44,71 +44,70 @@ TEMA VISUAL: Modern Dark Theme
         <HBox alignment="CENTER" spacing="0.0">
             <!-- LEFT SIDE - SHOWCASE -->
             <VBox alignment="CENTER" spacing="20.0" 
-                  style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #1a1a1a, #121212); -fx-padding: 50; -fx-border-color: #DEFF9A; -fx-border-width: 0 2 0 0;" 
+                  style="-fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #2F4156, #567C8D); -fx-padding: 50; -fx-border-color: #B0C4D4; -fx-border-width: 0 2 0 0;" 
                   HBox.hgrow="ALWAYS">
-                <Label style="-fx-font-size: 56; -fx-font-weight: bold; -fx-text-fill: #DEFF9A;" text="S I W" />
-                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #f5f5f5;" text="Jelajahi" />
-                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #DEFF9A;" text="Keindahan" />
-                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #f5f5f5;" text="Indonesia" />
+                <Label style="-fx-font-size: 50; -fx-font-weight: bold; -fx-text-fill: #FFFFFF;" text="ExploreNusa" />
+                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #F5EFEB;" text="Jelajahi" />
+                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #C8D9E6;" text="Keindahan" />
+                <Label style="-fx-font-size: 42; -fx-font-weight: bold; -fx-text-fill: #F5EFEB;" text="Indonesia" />
                 <Region style="-fx-min-height: 20;" />
-                <Label style="-fx-font-size: 18; -fx-text-fill: #DAFFDE; -fx-text-alignment: center;" 
+                <Label style="-fx-font-size: 18; -fx-text-fill: #FFFFFF; -fx-text-alignment: center;" 
                        text="Platform terlengkap untuk merencanakan perjalanan wisata Anda." wrapText="true" />
             </VBox>
             
             <!-- RIGHT SIDE - LOGIN FORM -->
             <VBox alignment="CENTER" spacing="35.0" 
-                  style="-fx-padding: 60; -fx-background-color: #121212;" 
+                  style="-fx-padding: 60; -fx-background-color: #C8D9E6;" 
                   HBox.hgrow="ALWAYS">
                 
                 <!-- HEADER -->
                 <VBox alignment="CENTER" spacing="10.0">
-                    <Label style="-fx-font-size: 36; -fx-font-weight: bold; -fx-text-fill: #DEFF9A;" text="Selamat Datang" />
-                    <Label style="-fx-font-size: 16; -fx-text-fill: #888888;" text="Masuk ke akun Anda untuk melanjutkan" />
+                    <Label style="-fx-font-size: 36; -fx-font-weight: bold; -fx-text-fill: #2F4156;" text="Selamat Datang" />
+                    <Label style="-fx-font-size: 16; -fx-text-fill: #567C8D;" text="Masuk ke akun Anda untuk melanjutkan" />
                 </VBox>
                 
                 <!-- LOGIN FORM CONTAINER -->
-                <VBox spacing="25.0" styleClass="card" style="-fx-padding: 40;" prefWidth="420.0" maxWidth="420.0">
+                <VBox spacing="25.0" styleClass="card" style="-fx-padding: 40; -fx-background-color: #FFFFFF; -fx-background-radius: 12; -fx-border-radius: 12;" prefWidth="420.0" maxWidth="420.0">
                     
                     <!-- USERNAME -->
                     <VBox spacing="10.0">
                         <Label styleClass="subtitle" text="USERNAME" />
                         <TextField fx:id="usernameField" promptText="Masukkan username Anda..." 
-                                   styleClass="search-field" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+                                   styleClass="search-field" style="-fx-border-radius: 8; -fx-background-radius: 8;" />
                     </VBox>
                     
                     <!-- PASSWORD -->
                     <VBox spacing="10.0">
                         <Label styleClass="subtitle" text="PASSWORD" />
                         <PasswordField fx:id="passwordField" promptText="Masukkan password Anda..." 
-                                       styleClass="search-field" style="-fx-border-radius: 10; -fx-background-radius: 10;" />
+                                       styleClass="search-field" style="-fx-border-radius: 8; -fx-background-radius: 8;" />
                     </VBox>
                     
                     <!-- ROLE SELECTION -->
                     <VBox spacing="10.0">
                         <Label styleClass="subtitle" text="PERAN (ROLE)" />
-                        <!-- Note: styleClass "search-field" is roughly equivalent to a basic text input visually -->
                         <ComboBox fx:id="roleComboBox" prefWidth="400.0" 
-                                  style="-fx-background-color: #1a1a1a; -fx-border-color: #2e2e2e; -fx-border-radius: 10; -fx-background-radius: 10; -fx-text-fill: #f5f5f5;" />
+                                  style="-fx-background-color: #FFFFFF; -fx-border-color: #B0C4D4; -fx-border-radius: 8; -fx-background-radius: 8; -fx-text-fill: #2F4156;" />
                     </VBox>
                     
                     <!-- REMEMBER ME -->
-                    <CheckBox fx:id="rememberCheckBox" style="-fx-text-fill: #DAFFDE; -fx-font-size: 13;" text="Ingat saya di perangkat ini" />
+                    <CheckBox fx:id="rememberCheckBox" style="-fx-text-fill: #567C8D; -fx-font-size: 13;" text="Ingat saya di perangkat ini" />
                     
                     <!-- STATUS LABEL -->
-                    <Label fx:id="statusLabel" style="-fx-font-size: 13; -fx-text-fill: #FF6B6B;" text="" wrapText="true" />
+                    <Label fx:id="statusLabel" style="-fx-font-size: 13; -fx-text-fill: #C0392B;" text="" wrapText="true" />
 
                     <!-- LOGIN BUTTON -->
                     <Button fx:id="loginButton" minHeight="50.0" maxWidth="Infinity" onAction="#handleLogin" 
-                            style="-fx-font-size: 15; -fx-font-weight: bold; -fx-background-color: #DEFF9A; -fx-text-fill: #121212; -fx-border-radius: 10; -fx-background-radius: 10;" 
+                            style="-fx-font-size: 15; -fx-font-weight: bold; -fx-background-color: #2F4156; -fx-text-fill: #FFFFFF; -fx-border-radius: 8; -fx-background-radius: 8;" 
                             text="M A S U K" />
                     
                 </VBox>
                 
                 <!-- FOOTER LINKS -->
                 <HBox alignment="CENTER" spacing="20.0">
-                    <Hyperlink fx:id="forgotPasswordLink" style="-fx-text-fill: #DEFF9A; -fx-font-size: 13; -fx-padding: 0;" text="Lupa Password?" />
-                    <Label style="-fx-text-fill: #555555;" text="|" />
-                    <Label style="-fx-text-fill: #777777; -fx-font-size: 13; -fx-font-weight: bold;" text="© Kelompok B6" />
+                    <Hyperlink fx:id="forgotPasswordLink" style="-fx-text-fill: #2F4156; -fx-font-size: 13; -fx-padding: 0; -fx-font-weight: bold;" text="Lupa Password?" />
+                    <Label style="-fx-text-fill: #567C8D;" text="|" />
+                    <Label style="-fx-text-fill: #567C8D; -fx-font-size: 13; -fx-font-weight: bold;" text="© Kelompok B6" />
                 </HBox>
             </VBox>
         </HBox>

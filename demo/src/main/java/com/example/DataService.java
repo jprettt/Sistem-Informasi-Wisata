@@ -351,4 +351,109 @@ public class DataService {
         }
         return 0;
     }
+
+    public static List<Pesanan> getPesananForUser(int userId) {
+        List<Pesanan> list = new ArrayList<>();
+        String sql = "SELECT p.id, p.destinasi_id, d.nama AS destinasi_nama, p.tanggal_kunjungan, p.total_harga, p.status "
+                + "FROM pesanan p JOIN destinasi d ON d.id = p.destinasi_id WHERE p.user_id = ? ORDER BY p.created_at DESC";
+
+        try (Connection conn = DatabaseHelper.getInstance().getConnection()) {
+            if (conn == null)
+                return list;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(new Pesanan(
+                                rs.getInt("id"),
+                                rs.getInt("destinasi_id"),
+                                rs.getString("destinasi_nama"),
+                                rs.getDate("tanggal_kunjungan") != null ? rs.getDate("tanggal_kunjungan").toLocalDate() : null,
+                                rs.getInt("total_harga"),
+                                rs.getString("status")));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal memuat pesanan user=" + userId, e);
+        }
+
+        return list;
+    }
+
+    public static boolean cancelPesanan(int pesananId, int userId) {
+        String sql = "UPDATE pesanan SET status = 'Cancelled' WHERE id = ? AND user_id = ? AND status <> 'Cancelled'";
+        try (Connection conn = DatabaseHelper.getInstance().getConnection()) {
+            if (conn == null)
+                return false;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, pesananId);
+                ps.setInt(2, userId);
+                int updated = ps.executeUpdate();
+                return updated > 0;
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal membatalkan pesanan", e);
+        }
+        return false;
+    }
+
+    /* ----------------- Wishlist Methods ----------------- */
+    public static boolean addToWishlist(int userId, int destinasiId) {
+        String sql = "INSERT INTO wishlist (user_id, destinasi_id) VALUES (?, ?) ON CONFLICT DO NOTHING RETURNING id";
+        try (Connection conn = DatabaseHelper.getInstance().getConnection()) {
+            if (conn == null)
+                return false;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ps.setInt(2, destinasiId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    return rs.next();
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal menambahkan wishlist", e);
+        }
+        return false;
+    }
+
+    public static boolean removeFromWishlist(int userId, int destinasiId) {
+        String sql = "DELETE FROM wishlist WHERE user_id = ? AND destinasi_id = ?";
+        try (Connection conn = DatabaseHelper.getInstance().getConnection()) {
+            if (conn == null)
+                return false;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                ps.setInt(2, destinasiId);
+                int affected = ps.executeUpdate();
+                return affected > 0;
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal menghapus wishlist", e);
+        }
+        return false;
+    }
+
+    public static List<Destinasi> getWishlistForUser(int userId) {
+        List<Destinasi> list = new ArrayList<>();
+        String sql = "SELECT d.id, d.nama, d.kategori, d.harga, d.deskripsi, d.koordinat, d.lokasi, d.rating, d.gambar_url "
+                + "FROM destinasi d JOIN wishlist w ON d.id = w.destinasi_id WHERE w.user_id = ? ORDER BY w.created_at DESC";
+
+        try (Connection conn = DatabaseHelper.getInstance().getConnection()) {
+            if (conn == null)
+                return list;
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                try (ResultSet rs = ps.executeQuery()) {
+                    while (rs.next()) {
+                        list.add(mapDestinasi(rs));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Gagal memuat wishlist", e);
+        }
+
+        return list;
+    }
 }
